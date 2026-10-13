@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Defender Sentinel</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div id="loginScreen" class="auth-screen">
+      <div class="auth-panel">
+        <div class="auth-header">
+          <div class="brand-icon">D</div>
+          <div>
+            <p class="auth-kicker">Enterprise security</p>
+            <h2>Defender Sentinel</h2>
+          </div>
+        </div>
+
+        <div class="auth-banner">
+          <span class="shield">🛡️</span>
+          <p>Active Directory authentication required for operations and endpoint access.</p>
+        </div>
+
+        <form id="loginForm" class="login-form">
+          <label>
+            <span>Domain</span>
+            <input id="domainInput" type="text" placeholder="corp.example.com" autocomplete="organization" />
+          </label>
+
+          <label>
+            <span>Username</span>
+            <input id="usernameInput" type="text" placeholder="user@corp.example.com" autocomplete="username" />
+          </label>
+
+          <label>
+            <span>Password</span>
+            <input id="passwordInput" type="password" placeholder="Enter password" />
+          </label>
+
+          <button type="submit" class="primary-button auth-button">Sign in to AD</button>
+
+          <div id="loginError" class="login-error hidden"></div>
+        </form>
+
+        <div class="auth-footer">
+          <span>Secure AD admin access</span>
+          <span>Windows Defender telemetry</span>
+        </div>
+      </div>
+    </div>
+
+    <div id="appShell" class="app-shell hidden">
+      <aside class="sidebar">
+        <div class="brand-wrap">
+          <div class="brand-icon">D</div>
+          <div class="brand-text">
+            <span class="brand-name">Defender Sentinel</span>
+            <small>Threat monitoring</small>
+          </div>
+        </div>
+
+        <nav class="nav">
+          <a class="nav-item active" href="#overview">
+            <span>◉</span>
+            Overview
+          </a>
+          <a class="nav-item" href="#alerts">
+            <span>◍</span>
+            Alerts
+          </a>
+          <a class="nav-item" href="#computers">
+            <span>◎</span>
+            Computers
+          </a>
+        </nav>
+
+        <div class="mini-panel">
+          <p class="panel-label">Environment</p>
+          <div class="mini-stat">
+            <span>Endpoints</span>
+            <strong id="mini-endpoints">--</strong>
+          </div>
+        </div>
+
+        <div class="user-panel">
+          <small>Signed in as</small>
+          <strong id="currentUser"></strong>
+          <button id="logoutButton" class="logout-button">Log out</button>
+        </div>
+      </aside>
+
+      <main class="main-panel" id="overview">
+        <header class="topbar">
+          <div>
+            <p class="eyebrow">Security operations</p>
+            <h1>Windows Defender command center</h1>
+          </div>
+
+          <div class="topbar-actions">
+            <button class="secondary-button" id="exportButton">Export</button>
+            <button class="primary-button" id="triggerScanBtn">Start remote scan</button>
+          </div>
+        </header>
+
+        <section class="stats-grid" id="statsGrid"></section>
+
+        <section class="toolbar">
+          <div class="search-box">
+            <span>⌕</span>
+            <input id="searchInput" type="text" placeholder="Search by computer, event message, or user" />
+          </div>
+          <div class="chip-group">
+            <button class="chip active" data-severity="all">All</button>
+            <button class="chip" data-severity="critical">Critical</button>
+            <button class="chip" data-severity="high">High</button>
+            <button class="chip" data-severity="medium">Medium</button>
+          </div>
+        </section>
+
+        <section class="content-grid">
+          <div class="panel computers-panel" id="computers">
+            <div class="panel-header">
+              <h2>AD computers</h2>
+              <span class="panel-badge" id="computerStatusBadge">Waiting for collection</span>
+            </div>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Computer</th>
+                    <th>OS</th>
+                    <th>Status</th>
+                    <th>Alerts</th>
+                    <th>Last seen</th>
+                  </tr>
+                </thead>
+                <tbody id="computerTableBody"></tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="panel alerts-panel" id="alerts">
+            <div class="panel-header">
+              <h2>Security alerts</h2>
+              <span class="panel-badge warning">7 day window</span>
+            </div>
+            <div id="alertList" class="alert-list"></div>
+          </div>
+
+          <div class="panel detail-panel">
+            <div class="panel-header">
+              <h2>Alert details</h2>
+              <span class="panel-badge critical">Focus</span>
+            </div>
+            <div id="alertDetail" class="alert-detail"></div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <div id="toast" class="toast hidden"></div>
+
+    <script src="app.js"></script>
+  </body>
+</html>
